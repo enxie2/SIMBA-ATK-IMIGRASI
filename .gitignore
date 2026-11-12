@@ -1,0 +1,9 @@
+node_modules/
+.env
+npm-debug.log*
+.DS_Store
+Thumbs.db
+backend/php_backup/
+frontend/public/
+coverage/
+.vite/

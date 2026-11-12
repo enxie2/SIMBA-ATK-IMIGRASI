@@ -1,0 +1,558 @@
+        <!-- ================= SECTION: PEGAWAI - DASHBOARD ================= -->
+        <section id="section-pegawai-dashboard" class="content-section">
+          <div class="welcome-card">
+            <div class="welcome-text">
+              <h2>Halo, <span class="text-gold" id="welcome-name">Pegawai</span>! 👋</h2>
+              <p>Butuh alat tulis kantor baru? Anda bisa langsung melakukan pengajuan ATK dengan mudah secara digital melalui sistem ini. Silakan periksa inventaris dan lakukan pengajuan baru.</p>
+              <button class="btn btn-secondary mt-3 nav-trigger-btn" data-target="section-pegawai-request">
+                <i data-lucide="plus-circle"></i> Buat Pengajuan Baru
+              </button>
+            </div>
+            <div class="welcome-illustration">
+              <i data-lucide="pencil-ruler"></i>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="stats-grid mt-4">
+            <div class="stat-card">
+              <div class="stat-icon bg-primary-soft text-primary">
+                <i data-lucide="list"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Total Pengajuan</h3>
+                <p id="peg-stat-total">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon bg-warning-soft text-warning">
+                <i data-lucide="clock"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Menunggu Persetujuan</h3>
+                <p id="peg-stat-pending">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon bg-success-soft text-success">
+                <i data-lucide="check-circle-2"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Disetujui / Selesai</h3>
+                <p id="peg-stat-approved">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon bg-danger-soft text-danger">
+                <i data-lucide="x-circle"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Ditolak</h3>
+                <p id="peg-stat-rejected">0</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="card mt-4">
+            <div class="card-header">
+              <h3>Pengajuan Terakhir Anda</h3>
+              <button class="btn btn-outline btn-sm nav-trigger-btn" data-target="section-pegawai-history">
+                Lihat Semua
+              </button>
+            </div>
+            <div class="card-body p-0 table-responsive">
+              <table class="table" id="table-peg-recent">
+                <thead>
+                  <tr>
+                    <th>ID Pengajuan</th>
+                    <th>Tanggal</th>
+                    <th>Barang</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+              <div id="peg-recent-empty" class="empty-state p-4 hidden">
+                <i data-lucide="clipboard"></i>
+                <p>Belum ada pengajuan ATK yang terdaftar.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: PEGAWAI - REQUEST (CATALOG & CART) ================= -->
+        <section id="section-pegawai-request" class="content-section hidden">
+          <div class="catalog-layout">
+            
+            <!-- LEFT: ATK Catalog Grid -->
+            <div class="catalog-main">
+              <div class="filter-bar">
+                <div class="search-box flex-grow">
+                  <i data-lucide="search"></i>
+                  <input type="text" id="catalog-search" placeholder="Cari nama barang atau kode ATK...">
+                </div>
+                <div class="select-box">
+                  <select id="catalog-category-filter">
+                    <option value="">Semua Kategori</option>
+                    <option value="Kertas & Dokumen">Kertas & Dokumen</option>
+                    <option value="Alat Tulis & Kantor">Alat Tulis & Kantor</option>
+                    <option value="Penyimpanan">Penyimpanan</option>
+                    <option value="Kebersihan & Sanitasi">Kebersihan & Sanitasi</option>
+                    <option value="Peralatan & IT">Peralatan & IT</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="catalog-grid" class="catalog-grid mt-4">
+                <!-- Dynamic cards -->
+              </div>
+              
+              <div id="catalog-empty" class="empty-state p-5 hidden">
+                <i data-lucide="box-select"></i>
+                <p>Barang tidak ditemukan. Coba kata kunci lain.</p>
+              </div>
+            </div>
+
+            <!-- RIGHT: Cart / Submission List -->
+            <div class="catalog-sidebar">
+              <div class="cart-card">
+                <div class="cart-header">
+                  <h3><i data-lucide="shopping-cart"></i> Daftar Pengajuan</h3>
+                  <span class="badge badge-primary" id="cart-count">0 Barang</span>
+                </div>
+                <div class="cart-body">
+                  <div id="cart-items" class="cart-items-list">
+                    <!-- Dynamic cart rows -->
+                    <div class="cart-empty-state">
+                      <i data-lucide="shopping-bag"></i>
+                      <p>Daftar pengajuan masih kosong. Klik "Tambah" pada barang di katalog.</p>
+                    </div>
+                  </div>
+
+                  <form id="form-submit-request" class="cart-form mt-3 hidden">
+                    <div class="form-group">
+                      <label for="req-purpose">Alasan / Tujuan Penggunaan <span class="required">*</span></label>
+                      <textarea id="req-purpose" placeholder="Contoh: Untuk kebutuhan cetak paspor dan operasional seksi lantas." required rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-block">
+                      Kirim Pengajuan ATK <i data-lucide="send"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= SECTION: PEGAWAI - HISTORY ================= -->
+        <section id="section-pegawai-history" class="content-section hidden">
+          <div class="card">
+            <div class="card-header flex-column flex-md-row gap-3">
+              <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="history-search" placeholder="Cari ID Pengajuan...">
+              </div>
+              <div class="filter-actions flex-wrap gap-2">
+                <button class="btn btn-outline btn-sm filter-status-peg active" data-status="">Semua</button>
+                <button class="btn btn-outline btn-sm filter-status-peg" data-status="pending">Pending</button>
+                <button class="btn btn-outline btn-sm filter-status-peg" data-status="approved">Disetujui</button>
+                <button class="btn btn-outline btn-sm filter-status-peg" data-status="rejected">Ditolak</button>
+                <button class="btn btn-outline btn-sm filter-status-peg" data-status="completed">Selesai</button>
+              </div>
+            </div>
+            <div class="card-body p-0 table-responsive">
+              <table class="table" id="table-peg-history">
+                <thead>
+                  <tr>
+                    <th>ID Pengajuan</th>
+                    <th>Tanggal</th>
+                    <th>Barang Diajukan</th>
+                    <th>Tujuan Penggunaan</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+              <div id="history-empty" class="empty-state p-5 hidden">
+                <i data-lucide="folder-open"></i>
+                <p>Tidak ada riwayat pengajuan yang cocok dengan filter.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: ADMIN - DASHBOARD ================= -->
+        <section id="section-admin-dashboard" class="content-section hidden">
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon bg-primary-soft text-primary">
+                <i data-lucide="box"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Total Jenis ATK</h3>
+                <p id="adm-stat-items">0</p>
+              </div>
+            </div>
+            <div class="stat-card border-danger-left">
+              <div class="stat-icon bg-danger-soft text-danger">
+                <i data-lucide="alert-triangle"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Stok Hampir Habis</h3>
+                <p id="adm-stat-low-stock">0</p>
+              </div>
+            </div>
+            <div class="stat-card border-warning-left">
+              <div class="stat-icon bg-warning-soft text-warning">
+                <i data-lucide="clock"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Pengajuan Pending</h3>
+                <p id="adm-stat-pending">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon bg-success-soft text-success">
+                <i data-lucide="file-check-2"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Pengajuan Selesai</h3>
+                <p id="adm-stat-completed">0</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2 mt-4">
+            <!-- Low Stock Warnings -->
+            <div class="card">
+              <div class="card-header border-danger-top">
+                <h3 class="text-danger flex-align-center"><i data-lucide="alert-triangle" class="mr-2"></i> Peringatan Stok Rendah</h3>
+                <button class="btn btn-outline btn-sm nav-trigger-btn" data-target="section-admin-inventory">Kelola Inventaris</button>
+              </div>
+              <div class="card-body p-0 max-height-350" style="overflow-y: auto;">
+                <ul class="list-group" id="list-low-stock">
+                  <!-- Dynamic items -->
+                </ul>
+                <div id="low-stock-empty" class="empty-state p-4 hidden">
+                  <i data-lucide="check-circle" class="text-success"></i>
+                  <p>Semua stok ATK aman!</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Submissions Pending -->
+            <div class="card">
+              <div class="card-header border-warning-top">
+                <h3 class="text-warning flex-align-center"><i data-lucide="bell" class="mr-2"></i> Pengajuan Butuh Persetujuan</h3>
+                <button class="btn btn-outline btn-sm nav-trigger-btn" data-target="section-admin-requests">Kelola Semua</button>
+              </div>
+              <div class="card-body p-0 max-height-350 table-responsive" style="overflow-y: auto;">
+                <table class="table table-sm" id="table-adm-recent-pending">
+                  <thead>
+                    <tr>
+                      <th>Pegawai</th>
+                      <th>Divisi</th>
+                      <th>Detail</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dynamic items -->
+                  </tbody>
+                </table>
+                <div id="recent-pending-empty" class="empty-state p-4 hidden">
+                  <i data-lucide="coffee"></i>
+                  <p>Tidak ada pengajuan yang membutuhkan persetujuan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: ADMIN - MANAGE REQUESTS ================= -->
+        <section id="section-admin-requests" class="content-section hidden">
+          <div class="card">
+            <div class="card-header flex-column flex-md-row gap-3">
+              <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="admin-req-search" placeholder="Cari nama, seksi, ID pengajuan...">
+              </div>
+              <div class="filter-actions flex-wrap gap-2">
+                <button class="btn btn-outline btn-sm filter-status-adm active" data-status="">Semua</button>
+                <button class="btn btn-outline btn-sm filter-status-adm" data-status="pending">Pending</button>
+                <button class="btn btn-outline btn-sm filter-status-adm" data-status="approved">Disetujui</button>
+                <button class="btn btn-outline btn-sm filter-status-adm" data-status="rejected">Ditolak</button>
+                <button class="btn btn-outline btn-sm filter-status-adm" data-status="completed">Selesai</button>
+              </div>
+            </div>
+            <div class="card-body p-0 table-responsive">
+              <table class="table" id="table-admin-requests">
+                <thead>
+                  <tr>
+                    <th>ID Pengajuan</th>
+                    <th>Tanggal</th>
+                    <th>Nama Pegawai / Seksi</th>
+                    <th>Barang Diajukan</th>
+                    <th>Alasan</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+              <div id="admin-req-empty" class="empty-state p-5 hidden">
+                <i data-lucide="folder-open"></i>
+                <p>Tidak ada pengajuan ATK dengan kriteria tersebut.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: ADMIN - INVENTORY ================= -->
+        <section id="section-admin-inventory" class="content-section hidden">
+          <div class="card">
+            <div class="card-header flex-column flex-md-row gap-3">
+              <div class="search-box flex-grow">
+                <i data-lucide="search"></i>
+                <input type="text" id="inventory-search" placeholder="Cari nama barang atau kode ATK...">
+              </div>
+              <div class="flex-align-center gap-2 flex-wrap">
+                <div class="select-box">
+                  <select id="inventory-category-filter">
+                    <option value="">Semua Kategori</option>
+                    <option value="Kertas & Dokumen">Kertas & Dokumen</option>
+                    <option value="Alat Tulis & Kantor">Alat Tulis & Kantor</option>
+                    <option value="Penyimpanan">Penyimpanan</option>
+                    <option value="Kebersihan & Sanitasi">Kebersihan & Sanitasi</option>
+                    <option value="Peralatan & IT">Peralatan & IT</option>
+                  </select>
+                </div>
+                <button class="btn btn-secondary" id="btn-open-add-atk">
+                  <i data-lucide="plus"></i> Tambah ATK Baru
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0 table-responsive">
+              <table class="table" id="table-admin-inventory">
+                <thead>
+                  <tr>
+                    <th>Kode</th>
+                    <th>Nama Barang</th>
+                    <th>Kategori</th>
+                    <th>Stok</th>
+                    <th>Min. Stok</th>
+                    <th>Satuan</th>
+                    <th>Deskripsi</th>
+                    <th>Kondisi</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+              <div id="inventory-empty" class="empty-state p-5 hidden">
+                <i data-lucide="box"></i>
+                <p>Data inventaris kosong atau tidak ditemukan.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: ADMIN - REPORTS ================= -->
+        <section id="section-admin-reports" class="content-section hidden">
+          <div class="card filter-card no-print">
+            <div class="card-header">
+              <h3><i data-lucide="sliders-horizontal" class="mr-2"></i> Filter Laporan ATK</h3>
+            </div>
+            <div class="card-body">
+              <form id="form-filter-report" class="grid-4 gap-3">
+                <div class="form-group">
+                  <label for="rep-start-date">Tanggal Mulai</label>
+                  <input type="date" id="rep-start-date">
+                </div>
+                <div class="form-group">
+                  <label for="rep-end-date">Tanggal Selesai</label>
+                  <input type="date" id="rep-end-date">
+                </div>
+                <div class="form-group">
+                  <label for="rep-division">Seksi / Divisi</label>
+                  <select id="rep-division">
+                    <option value="">Semua Seksi</option>
+                    <option value="Sub Bagian Umum">Sub Bagian Umum</option>
+                    <option value="Seksi Lalu Lintas Keimigrasian">Seksi Lalu Lintas Keimigrasian</option>
+                    <option value="Seksi Izin Tinggal & Status Keimigrasian">Seksi Izin Tinggal & Status Keimigrasian</option>
+                    <option value="Seksi Informasi & Komunikasi Keimigrasian">Seksi Informasi & Komunikasi Keimigrasian</option>
+                    <option value="Seksi Intelijen & Penindakan Keimigrasian">Seksi Intelijen & Penindakan Keimigrasian</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="rep-status">Status Pengajuan</label>
+                  <select id="rep-status">
+                    <option value="">Semua Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="rejected">Ditolak</option>
+                    <option value="completed">Selesai (Diserahkan)</option>
+                  </select>
+                </div>
+              </form>
+              <div class="flex-justify-end mt-4 gap-2">
+                <button type="button" id="btn-reset-report" class="btn btn-outline">Reset Filter</button>
+                <button type="button" id="btn-print-report" class="btn btn-primary">
+                  <i data-lucide="printer"></i> Cetak Laporan
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Printable Area -->
+          <div class="card mt-4 printable-report-card">
+            <!-- Kop Laporan Kanim -->
+            <div class="kanim-report-header hidden-screen-only">
+              <div class="kop-logo">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="60" height="60">
+                  <circle cx="50" cy="50" r="45" stroke="black" stroke-width="3" />
+                  <path d="M50 18 L55 33 L70 28 L62 40 L75 43 L60 50 L68 63 L50 56 L32 63 L40 50 L25 43 L38 40 L30 28 L45 33 Z" fill="black" />
+                </svg>
+              </div>
+              <div class="kop-text">
+                <h3>KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA R.I.</h3>
+                <h4>KANTOR WILAYAH JAWA BARAT</h4>
+                <h2>KANTOR IMIGRASI KELAS I NON TPI KOTA TASIKMALAYA</h2>
+                <p>Jl. Letnan Harun No. 2, Sukamulya, Kec. Bungursari, Tasikmalaya, Jawa Barat 46151</p>
+                <p>Telp: (0265) 342616 | Email: kanim_tasikmalaya@kemenkumham.go.id</p>
+              </div>
+            </div>
+            
+            <div class="report-title-container">
+              <h2>LAPORAN PENGAJUAN ALAT TULIS KANTOR (ATK)</h2>
+              <p id="report-filter-period">Periode: Semua Riwayat</p>
+            </div>
+
+            <div class="card-body p-0 table-responsive">
+              <table class="table table-bordered" id="table-report-results">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>ID Pengajuan</th>
+                    <th>Tanggal</th>
+                    <th>Nama Pegawai / Seksi</th>
+                    <th>Barang ATK & Jumlah</th>
+                    <th>Keperluan / Tujuan</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamic report rows -->
+                </tbody>
+              </table>
+              <div id="report-empty" class="empty-state p-5">
+                <i data-lucide="file-warning"></i>
+                <p>Tidak ada data pengajuan yang sesuai dengan kriteria pencarian laporan.</p>
+              </div>
+            </div>
+
+            <!-- Tanda Tangan Laporan (Khusus Cetak) -->
+            <div class="kanim-report-signatures hidden-screen-only mt-5">
+              <div class="signature-block">
+                <p>Mengetahui,</p>
+                <p class="signature-role">Kepala Urusan Keuangan</p>
+                <div class="signature-space"></div>
+                <p class="signature-name">....................................................</p>
+                <p class="signature-nip">NIP. ...............................................</p>
+              </div>
+              <div class="signature-block">
+                <p>Tasikmalaya, <span class="signature-date">18 Juni 2026</span></p>
+                <p class="signature-role">Kasubag Umum / Pengelola Logistik</p>
+                <div class="signature-space"></div>
+                <p class="signature-name">Hendi Wijaya, S.Sos.</p>
+                <p class="signature-nip">NIP. 19780512 200501 1 002</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: ADMIN - KELOLA PENGGUNA ================= -->
+        <section id="section-admin-users" class="content-section hidden">
+          <div class="card">
+            <div class="card-header">
+              <h3><i data-lucide="users" class="mr-2"></i>Daftar Akun Pengguna</h3>
+              <button id="btn-add-user" class="btn btn-secondary btn-sm">
+                <i data-lucide="user-plus"></i> Tambah Pengguna Baru
+              </button>
+            </div>
+            <div class="card-body p-0 table-responsive">
+              <table class="table" id="table-users">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Lengkap</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Seksi / Unit Kerja</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+              <div id="users-empty" class="empty-state p-5 hidden">
+                <i data-lucide="users"></i>
+                <p>Belum ada pengguna yang terdaftar.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION: UBAH PASSWORD ================= -->
+        <section id="section-change-password" class="content-section hidden">
+          <div class="card" style="max-width: 500px; margin: 0 auto;">
+            <div class="card-header">
+              <h3><i data-lucide="key-round" class="mr-2"></i>Ubah Password</h3>
+            </div>
+            <div class="card-body">
+              <form id="form-change-password">
+                <div class="form-group">
+                  <label for="chg-old-password">Password Saat Ini <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="chg-old-password" placeholder="Masukkan password lama..." required autocomplete="current-password">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="chg-new-password">Password Baru <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="chg-new-password" placeholder="Minimal 6 karakter..." required autocomplete="new-password">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="chg-confirm-password">Konfirmasi Password Baru <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="chg-confirm-password" placeholder="Ulangi password baru..." required autocomplete="new-password">
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 btn-block">
+                  <i data-lucide="check-circle"></i> Perbarui Password
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
